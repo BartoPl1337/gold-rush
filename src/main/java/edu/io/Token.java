@@ -1,16 +1,6 @@
 package edu.io;
 
-public class Token {
-    public final String label;
-
-    public Token(String label) {
-        this.label = label;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
+public record Token(String label) {
     @Override
     public String toString() {
         return label;

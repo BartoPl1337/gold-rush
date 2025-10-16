@@ -50,7 +50,7 @@ public class BoardTest {
         int size = board.size;
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                if (!board.square(col, row).label.equals(EMPTY_TOKEN_LABEL)) {
+                if (!board.square(col, row).label().equals(EMPTY_TOKEN_LABEL)) {
                     return false;
                 }
             }

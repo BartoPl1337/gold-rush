@@ -6,7 +6,7 @@ public class TokenTest {
     @Test
     void token_has_label() {
         Token token = new Token("@");
-        Assertions.assertEquals("@", token.label);
+        Assertions.assertEquals("@", token.label());
     }
 
     @Test
