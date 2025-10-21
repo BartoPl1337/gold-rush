@@ -1,5 +1,9 @@
 package edu.io;
 
+import edu.io.token.EmptyToken;
+import edu.io.token.PlayerToken;
+import edu.io.token.Token;
+
 public class Board {
     public final int size;
     public final Token[][] grid;
@@ -14,11 +18,13 @@ public class Board {
         clean();
     }
 
+    public record Coords(int row, int col) {
+    }
+
     public void clean() {
-//        Token empty = new Token("\u30FB");
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                grid[i][j] = new Token("\u30FB");
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                grid[row][col] = new EmptyToken();
             }
         }
     }
@@ -37,26 +43,11 @@ public class Board {
     }
 
     public void display() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                System.out.print(grid[i][j]);
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                System.out.print(grid[row][col]);
             }
             System.out.println();
         }
-    }
-
-    public void movePlayer(int row, int col, Player player) {
-        if (col < 0 || col >= size || row < 0 || row >= size) {
-           System.out.println("Nie mozna wyjsc poza plansze");
-           return;
-        }
-        Token token = grid[row][col];
-        if(token.label().equals("\uD83D\uDCB0")){
-            player.addGold(1);
-        }
-
-        grid[player.getRow()][player.getCol()] = new Token("\u30FB");
-        player.setPosition(row, col);
-        grid[row][col] = player.getToken();
     }
 }
