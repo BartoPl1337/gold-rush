@@ -1,7 +1,6 @@
 package edu.io;
 
 import edu.io.token.EmptyToken;
-import edu.io.token.PlayerToken;
 import edu.io.token.Token;
 
 public class Board {
@@ -9,13 +8,13 @@ public class Board {
     public final Token[][] grid;
 
     public Board() {
-        this(8);
-    }
-
-    public Board(int size) {
-        this.size = size;
+        this.size = 8;
         this.grid = new Token[size][size];
         clean();
+    }
+
+    public int size() {
+        return size;
     }
 
     public record Coords(int row, int col) {
@@ -35,7 +34,7 @@ public class Board {
         }
     }
 
-    public Token square(int col, int row) {
+    public Token peekToken(int col, int row) {
         if (col >= 0 && col < size && row >= 0 && row < size) {
             return grid[row][col];
         }
@@ -49,5 +48,16 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    public Coords getAvailableSquare() {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                if (grid[row][col] instanceof EmptyToken) {
+                    return new Coords(row, col);
+                }
+            }
+        }
+        throw new IllegalStateException("blad");
     }
 }

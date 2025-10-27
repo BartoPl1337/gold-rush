@@ -1,6 +1,7 @@
 package edu.io.token;
 
 import edu.io.Board;
+import edu.io.Player;
 
 public class PlayerToken extends Token {
     public enum Move {
@@ -13,35 +14,20 @@ public class PlayerToken extends Token {
 
     private int row;
     private int col;
-    private int gold;
     private final Board board;
+    private final Player player;
 
-    public PlayerToken(Board board, int row, int col) {
+    public PlayerToken(Player player, Board board) {
         super(Label.PLAYER_TOKEN_LABEL);
+        Board.Coords c = board.getAvailableSquare();
         if (col < 0 || col >= board.size || row < 0 || row >= board.size) {
             System.out.println("Gracza nie ma na planszy");
         }
-        this.row = row;
-        this.col = col;
-        this.gold = 0;
+        this.row = c.row();
+        this.col = c.col();
         this.board = board;
+        this.player = player;
         board.placeToken(col, row, this);
-    }
-
-    public int getCol() {
-        return col;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getGold() {
-        return gold;
-    }
-
-    public void addGold(int gold) {
-        this.gold += gold;
     }
 
     public Board.Coords pos() {
@@ -75,10 +61,12 @@ public class PlayerToken extends Token {
             if (col < 0 || col >= board.size || row < 0 || row >= board.size) {
                 throw new IllegalArgumentException("Cannot move outside of board");
             }
-            board.placeToken(col, row, new EmptyToken());
+            player.interactWithToken(board.peekToken(col, row));
+
+            board.placeToken(this.col, this.row, new EmptyToken());
             this.col = col;
             this.row = row;
-            board.placeToken(this.row, this.col, this);
+            board.placeToken(col, row, this);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

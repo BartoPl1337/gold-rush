@@ -6,9 +6,11 @@ public abstract class Token {
     public Token(String label) {
         this.label = label;
     }
-    public String getLabel() {
+
+    public String label() {
         return label;
     }
+
     @Override
     public String toString() {
         return label;
