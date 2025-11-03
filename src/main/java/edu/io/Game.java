@@ -1,19 +1,15 @@
 package edu.io;
 
+import edu.io.player.Player;
 import edu.io.token.PlayerToken;
 
 public class Game {
-    private Board board;
+    private final Board board = new Board();
     private Player player;
-
-    public Game() {
-        this.board = new Board();
-    }
 
     public void join(Player player) {
         this.player = player;
-        PlayerToken token = new PlayerToken(player, board);
-        player.assignToken(token);
+        player.assignToken(new PlayerToken(player, board));
     }
 
     public void start() {

@@ -1,6 +1,6 @@
 import edu.io.Board;
 import edu.io.Game;
-import edu.io.Player;
+import edu.io.player.Player;
 import edu.io.token.PlayerToken;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +45,8 @@ class GameTest {
                                     token.pos().row()));
                 }
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Assertions.fail();
         }
     }

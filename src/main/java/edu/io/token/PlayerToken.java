@@ -1,7 +1,7 @@
 package edu.io.token;
 
 import edu.io.Board;
-import edu.io.Player;
+import edu.io.player.Player;
 
 public class PlayerToken extends Token {
     public enum Move {
@@ -20,8 +20,8 @@ public class PlayerToken extends Token {
     public PlayerToken(Player player, Board board) {
         super(Label.PLAYER_TOKEN_LABEL);
         Board.Coords c = board.getAvailableSquare();
-        if (col < 0 || col >= board.size || row < 0 || row >= board.size) {
-            System.out.println("Gracza nie ma na planszy");
+        if (c.col() < 0 || c.col() >= board.size || c.row() < 0 || c.row() >= board.size) {
+            throw new IllegalArgumentException("Gracza nie ma na planszy");
         }
         this.row = c.row();
         this.col = c.col();
@@ -35,40 +35,30 @@ public class PlayerToken extends Token {
     }
 
     public void move(Move dir) {
-        int col = this.col;
-        int row = this.row;
-        try {
+        int newCol = this.col;
+        int newRow = this.row;
 
-            switch (dir) {
-                case Move.DOWN:
-                    row++;
-                    break;
-                case Move.UP:
-                    row--;
-                    break;
-                case Move.RIGHT:
-                    col++;
-                    break;
-                case Move.LEFT:
-                    col--;
-                    break;
-                case Move.NONE:
-                    return;
-                default:
-                    System.out.println("Zly przycisk");
-                    return;
+        switch (dir) {
+            case UP -> newRow--;
+            case DOWN -> newRow++;
+            case LEFT -> newCol--;
+            case RIGHT -> newCol++;
+            default -> {
+                return;
             }
-            if (col < 0 || col >= board.size || row < 0 || row >= board.size) {
-                throw new IllegalArgumentException("Cannot move outside of board");
-            }
-            player.interactWithToken(board.peekToken(col, row));
-
-            board.placeToken(this.col, this.row, new EmptyToken());
-            this.col = col;
-            this.row = row;
-            board.placeToken(col, row, this);
-        } catch (Exception e) {
-            throw new IllegalArgumentException(e);
         }
+
+        if (newCol < 0 || newCol >= board.size || newRow < 0 || newRow >= board.size) {
+            throw new IllegalArgumentException("Nie mozna wyjsc poza plansze");
+        }
+
+        Token target = board.peekToken(newCol, newRow);
+        player.interactWithToken(target);
+
+        board.placeToken(this.col, this.row, new EmptyToken());
+        this.col = newCol;
+        this.row = newRow;
+        board.placeToken(newCol, newRow, this);
     }
+
 }
