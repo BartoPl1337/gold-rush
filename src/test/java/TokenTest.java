@@ -3,7 +3,6 @@ import edu.io.player.Player;
 import edu.io.token.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Modifier;
 
 class TokenTest {

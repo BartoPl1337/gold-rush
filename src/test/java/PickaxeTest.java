@@ -10,7 +10,7 @@ public class PickaxeTest {
     @Test
     void pickaxe_gain_when_player_interacts_with_gold() {
         var player = new Player();
-        player.interactWithToken(new edu.io.token.PickaxeToken());
+        player.interactWithToken(new PickaxeToken());
         player.interactWithToken(new GoldToken(2.0));
         Assertions.assertEquals(2.0 * 1.5, player.gold.amount());
     }
@@ -18,49 +18,49 @@ public class PickaxeTest {
 
     @Test
     void default_gainFactor_is_1_5() {
-        Assertions.assertEquals(1.5, new edu.io.token.PickaxeToken().gainFactor());
+        Assertions.assertEquals(1.5, new PickaxeToken().gainFactor());
     }
 
     @Test
     void can_create_pickaxe_with_custom_gainFactor() {
-        Assertions.assertEquals(1.75, new edu.io.token.PickaxeToken(1.75).gainFactor());
+        Assertions.assertEquals(1.75, new PickaxeToken(1.75).gainFactor());
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new edu.io.token.PickaxeToken(0));
+                () -> new PickaxeToken(0));
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new edu.io.token.PickaxeToken(-1));
+                () -> new PickaxeToken(-1));
     }
 
     @Test
     void gainFactor_affects_collected_gold() {
         var player = new Player();
-        player.interactWithToken(new edu.io.token.PickaxeToken(1.75));
+        player.interactWithToken(new PickaxeToken(1.75));
         player.interactWithToken(new GoldToken(2.0));
         Assertions.assertEquals(1.75 * 2.0, player.gold.amount());
     }
 
     @Test
     void default_durability_is_3() {
-        Assertions.assertEquals(3, new edu.io.token.PickaxeToken().durability());
+        Assertions.assertEquals(3, new PickaxeToken().durability());
     }
 
     @Test
     void can_create_pickaxe_with_custom_durability() {
-        Assertions.assertEquals(5, new edu.io.token.PickaxeToken(1.0, 5).durability());
+        Assertions.assertEquals(5, new PickaxeToken(1.0, 5).durability());
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new edu.io.token.PickaxeToken(1.0, 0));
+                () -> new PickaxeToken(1.0, 0));
         Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new edu.io.token.PickaxeToken(1.0, -1));
+                () -> new PickaxeToken(1.0, -1));
     }
 
     @Test
     void pickaxe_use_decrement_durability() {
         var n = 3;
-        var t = new edu.io.token.PickaxeToken(1.5, n);
-        for (var i = 0; i < n; i++) {
+        var t = new PickaxeToken(1.5, n);
+        for (var i=0; i<n; i++) {
             Assertions.assertTrue(t.durability() > 0);
             t.use();
         }
@@ -72,7 +72,7 @@ public class PickaxeTest {
         // Arrange
         var player = new Player();
         var goldToken = new GoldToken(2.0);
-        var pickaxeToken = new edu.io.token.PickaxeToken(1.5, 1);
+        var pickaxeToken = new PickaxeToken(1.5, 1);
         player.interactWithToken(pickaxeToken);
         pickaxeToken.use();
         // Act
@@ -84,7 +84,7 @@ public class PickaxeTest {
 
     @Test
     void can_use_pickaxe_with_gold() {
-        new edu.io.token.PickaxeToken().useWith(new GoldToken())
+        new PickaxeToken().useWith(new GoldToken())
                 .ifWorking(() -> {
                     Assertions.assertTrue(true);
                 })
@@ -94,7 +94,7 @@ public class PickaxeTest {
 
     @Test
     void can_use_pickaxe_with_other_than_gold_but_no_effect() {
-        new edu.io.token.PickaxeToken().useWith(new EmptyToken())
+        new PickaxeToken().useWith(new EmptyToken())
                 .ifWorking(Assertions::fail)
                 .ifBroken(Assertions::fail)
                 .ifIdle(() -> {
@@ -104,9 +104,8 @@ public class PickaxeTest {
 
     @Test
     void broken_pickaxe_doesnt_work() {
-        var pickaxeToken = new edu.io.token.PickaxeToken(1.5, 1);
-        pickaxeToken.useWith(new GoldToken()).ifWorking(() -> {
-        });
+        var pickaxeToken = new PickaxeToken(1.5, 1);
+        pickaxeToken.useWith(new GoldToken()).ifWorking(()->{});
         pickaxeToken.useWith(new GoldToken())
                 .ifWorking(Assertions::fail)
                 .ifBroken(() -> {

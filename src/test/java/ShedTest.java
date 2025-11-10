@@ -22,7 +22,7 @@ public class ShedTest {
 
     @Test
     void can_add_tool() {
-        var tool = new edu.io.token.PickaxeToken();
+        var tool = new PickaxeToken();
         shed.add(tool);
         Assertions.assertEquals(tool, shed.getTool());
     }
@@ -36,7 +36,7 @@ public class ShedTest {
 
     @Test
     void can_drop_tool() {
-        shed.add(new edu.io.token.PickaxeToken());
+        shed.add(new PickaxeToken());
         shed.dropTool();
         Assertions.assertInstanceOf(NoTool.class, shed.getTool());
     }

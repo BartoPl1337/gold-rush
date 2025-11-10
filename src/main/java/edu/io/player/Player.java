@@ -1,6 +1,8 @@
 package edu.io.player;
 
 import edu.io.Repairable;
+import edu.io.Vitals;
+import edu.io.VitalsValue;
 import edu.io.token.*;
 
 import java.util.Objects;
@@ -10,6 +12,7 @@ public class Player {
     private PlayerToken token;
     public final Gold gold;
     private final Shed shed;
+    public Vitals vitals;
 
     public Player() {
         this.gold = new Gold();
@@ -53,10 +56,12 @@ public class Player {
                 if (shed.getTool() instanceof Repairable tool) {
                     tool.repair();
                 }
+                vitals.dehydrate(VitalsValue.DEHYDRATION_MOVE);
             }
 
             default -> {
             }
         }
     }
+
 }
