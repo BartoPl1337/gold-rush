@@ -6,4 +6,5 @@ public class Label {
     public static final String PLAYER_TOKEN_LABEL = "\uC6C3";
     public static final String PICKAXE_TOKEN_LABEL = "\uD83D\uDCB1";
     public static final String ANVIL_TOKEN_LABEL = "\uD83D\uDCB2";
+    public static final String WATER_TOKEN_LABEL = "\uD83D\uDCB3";
 }

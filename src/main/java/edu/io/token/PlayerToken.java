@@ -23,6 +23,9 @@ public class PlayerToken extends Token {
         if (c.col() < 0 || c.col() >= board.size || c.row() < 0 || c.row() >= board.size) {
             throw new IllegalArgumentException("Gracza nie ma na planszy");
         }
+        if(player == null) {
+            throw new NullPointerException("Player is null");
+        }
         this.row = c.row();
         this.col = c.col();
         this.board = board;

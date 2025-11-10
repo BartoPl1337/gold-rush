@@ -1,4 +1,4 @@
-package edu.io;
+package edu.io.player;
 
 import java.util.Objects;
 
@@ -15,16 +15,28 @@ public class Vitals {
     }
 
     public int hydration() {
+        if (hydration < 0) {
+            hydration = 0;
+        }
         return hydration;
     }
 
     public void hydrate(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("amount cannot be negative");
+        }
         hydration += amount;
+        if (hydration > 100) {
+            hydration = 100;
+        }
     }
 
     public void dehydrate(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("amount cannot be negative");
+        }
         hydration -= amount;
-        if (hydration < 0) {
+        if (hydration == 0) {
             onDeathCallback.run();
         }
     }
@@ -34,8 +46,6 @@ public class Vitals {
     }
 
     public void setOnDeathHandler(@NotNull Runnable callback) {
-//        Objects.requireNonNull(callback, "callback cannot be null");
         onDeathCallback = Objects.requireNonNull(callback, "callback cannot be null");
-//        onDeathCallback = callback;
     }
 }

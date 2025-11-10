@@ -29,6 +29,9 @@ public class Board {
     }
 
     public void placeToken(int col, int row, Token token) {
+        if (token == null) {
+            throw new NullPointerException("cannot be null");
+        }
         if (col >= 0 && col < size && row >= 0 && row < size) {
             grid[row][col] = token;
         }
